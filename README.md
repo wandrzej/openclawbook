@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://colab.research.google.com/github/wandrzej/openclawbook/blob/HEAD/openclaw_colab.ipynb"><img src="https://img.shields.io/badge/Open%20in-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" alt="Open in Colab"></a>
+  <a href="https://colab.research.google.com/github/wandrzej/openclawbook/blob/HEAD/colobster.ipynb"><img src="https://img.shields.io/badge/Open%20in-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" alt="Open in Colab"></a>
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
 
-> **📘 About this fork** — This is the **openclawbook** fork, a companion repo focused on making OpenClaw accessible to everyone. It includes a ready-to-run [Google Colab notebook](openclaw_colab.ipynb) that lets you launch the full OpenClaw gateway on a free CPU instance — no local setup, no server, just click and go.
+> **🦞 CoLobster** — Run OpenClaw on Google Colab with zero setup. This fork adds a ready-to-run [Colab notebook](colobster.ipynb) that launches the full OpenClaw gateway on a free CPU instance — just add an API key and click go.
 
 **OpenClaw** is a _personal AI assistant_ you run on your own devices.
 It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS/iOS/Android, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.
