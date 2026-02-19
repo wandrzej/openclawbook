@@ -1,10 +1,10 @@
-# CoLobster
-
 <p align="center">
-  <a href="https://colab.research.google.com/github/wandrzej/openclawbook/blob/HEAD/colobster.ipynb"><img src="https://img.shields.io/badge/Open%20in-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" alt="Open in Colab"></a>
+  <img src="assets/colobster_banner.png" alt="CoLobster — Run OpenClaw on Google Colab with zero setup" width="700">
 </p>
 
-Run [OpenClaw](https://github.com/openclaw/openclaw) on a free Google Colab instance — just add an API key and click go.
+<p align="center">
+  <a href="https://colab.research.google.com/github/wandrzej/colobster/blob/HEAD/colobster.ipynb"><img src="https://img.shields.io/badge/Open%20in-Google%20Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" alt="Open in Colab"></a>
+</p>
 
 ## What is this?
 
@@ -33,7 +33,7 @@ Then chat directly in the notebook via the built-in Gradio UI, or create a publi
 
 Click the badge above or go directly to the notebook:
 
-**[Open CoLobster in Google Colab](https://colab.research.google.com/github/wandrzej/openclawbook/blob/HEAD/colobster.ipynb)**
+**[Open CoLobster in Google Colab](https://colab.research.google.com/github/wandrzej/colobster/blob/HEAD/colobster.ipynb)**
 
 ## Links
 
