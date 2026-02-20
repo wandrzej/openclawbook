@@ -46,3 +46,5 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 - **Gradio 6**: `type='messages'` parameter was removed — do NOT add it back to `gr.ChatInterface()`
 - **ANSI stripping**: Log parser uses `re.sub(r'\x1b\[[0-9;]*m', '', ...)` to strip terminal color codes
 - **`OPENCLAW_NO_RESPAWN=1`**: Required on Colab (no systemd) — enables in-process restart instead of process exit
+- **Tool restrictions**: Config includes `tools.deny: ['exec', 'bash', 'process']` — blocks the agent from running shell commands, preventing prompt-injection attacks that trick it into leaking API keys via `printenv`, `cat /proc/self/environ`, etc. This is the primary security boundary; the Chat UI's `_redact_secrets()` filter is a secondary defense-in-depth layer
+- **API keys in memory only**: Keys are set in `os.environ` during cell 3 and inherited by the gateway process — no `.env` file is written to disk
