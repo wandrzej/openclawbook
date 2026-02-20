@@ -42,7 +42,8 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 - **Model config format**: `agents.defaults.model` must be `{ primary: "provider/model-id" }` (Zod-validated object), NOT a plain string
 - **Control UI basePath**: Config includes `controlUi.basePath: '/ui'` so dashboard serves at `/ui/` instead of root
 - **Dashboard auth**: Token passed via URL hash fragment `#token=<TOKEN>` — auto-extracted by Control UI, stored in settings, then sent inside WebSocket connect frame as `params.auth.token`
-- **trustedProxies**: Config includes `trustedProxies: ['127.0.0.1']` — required for ngrok. Without this, the gateway sees proxy headers from an untrusted address, treats the connection as non-local, and demands device pairing (endless `1008: pairing required` WebSocket close loop)
+- **trustedProxies**: Config includes `trustedProxies: ['127.0.0.1']` — required for ngrok. Without this, the gateway sees proxy headers from an untrusted address and rejects the connection
+- **allowInsecureAuth**: Config includes `controlUi.allowInsecureAuth: true` — lets the dashboard use token-only auth without device pairing. Required for ngrok/tunnel access. Without this, the Control UI sends a device identity that needs pairing approval, creating a chicken-and-egg problem (dashboard can't connect to approve its own device)
 - **Gradio 6**: `type='messages'` parameter was removed — do NOT add it back to `gr.ChatInterface()`
 - **ANSI stripping**: Log parser uses `re.sub(r'\x1b\[[0-9;]*m', '', ...)` to strip terminal color codes
 - **`OPENCLAW_NO_RESPAWN=1`**: Required on Colab (no systemd) — enables in-process restart instead of process exit
