@@ -13,7 +13,7 @@ LICENSE                  # MIT
 
 OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` — the source code is NOT in this repo.
 
-## Notebook cell layout (19 cells)
+## Notebook cell layout (17 cells)
 
 | Index | Type     | Purpose |
 |-------|----------|---------|
@@ -27,15 +27,13 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 | 7     | code     | Drive persistence setup |
 | 8     | markdown | Step 3 intro |
 | 9     | code     | Step 3 — Launch gateway (writes config, starts process) |
-| 10    | markdown | "What now?" + troubleshooting |
-| 11    | markdown | Chat UI intro |
-| 12    | code     | Chat UI (Gradio ChatInterface) |
-| 13    | markdown | ngrok tunnel intro + comparison tables |
-| 14    | code     | ngrok tunnel setup |
-| 15    | markdown | Utilities section header |
-| 16    | code     | View logs |
-| 17    | code     | Check status |
-| 18    | code     | Stop gateway |
+| 10    | markdown | Step 4 — Connect via ngrok |
+| 11    | code     | Step 4 — ngrok tunnel setup |
+| 12    | markdown | "You're all set!" — directs user to dashboard |
+| 13    | markdown | Utilities section header |
+| 14    | code     | View logs |
+| 15    | code     | Check status |
+| 16    | code     | Stop gateway |
 
 ## Key technical details
 
@@ -44,8 +42,9 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 - **Dashboard auth**: Token passed via URL hash fragment `#token=<TOKEN>` — auto-extracted by Control UI, stored in settings, then sent inside WebSocket connect frame as `params.auth.token`
 - **trustedProxies**: Config includes `trustedProxies: ['127.0.0.1']` — required for ngrok. Without this, the gateway sees proxy headers from an untrusted address and rejects the connection
 - **allowInsecureAuth**: Config includes `controlUi.allowInsecureAuth: true` — lets the dashboard use token-only auth without device pairing. Required for ngrok/tunnel access. Without this, the Control UI sends a device identity that needs pairing approval, creating a chicken-and-egg problem (dashboard can't connect to approve its own device)
-- **Gradio 6**: `type='messages'` parameter was removed — do NOT add it back to `gr.ChatInterface()`
+- **No Gradio**: The notebook does not include a built-in chat UI — the OpenClaw Control UI (via ngrok) provides chat, channel setup, and agent config
+- **ngrok is mandatory**: Step 4 sets up ngrok as the primary user interface — the Control UI at `/ui/` has everything users need
 - **ANSI stripping**: Log parser uses `re.sub(r'\x1b\[[0-9;]*m', '', ...)` to strip terminal color codes
 - **`OPENCLAW_NO_RESPAWN=1`**: Required on Colab (no systemd) — enables in-process restart instead of process exit
-- **Tool restrictions**: Config includes `tools.deny: ['exec', 'bash', 'process']` — blocks the agent from running shell commands, preventing prompt-injection attacks that trick it into leaking API keys via `printenv`, `cat /proc/self/environ`, etc. This is the primary security boundary; the Chat UI's `_redact_secrets()` filter is a secondary defense-in-depth layer
+- **Tool restrictions**: Config includes `tools.deny: ['exec', 'bash', 'process']` — blocks the agent from running shell commands, preventing prompt-injection attacks that trick it into leaking API keys via `printenv`, `cat /proc/self/environ`, etc.
 - **API keys in memory only**: Keys are set in `os.environ` during cell 3 and inherited by the gateway process — no `.env` file is written to disk
