@@ -13,7 +13,7 @@ LICENSE                  # MIT
 
 OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` — the source code is NOT in this repo.
 
-## Notebook cell layout (17 cells)
+## Notebook cell layout (18 cells)
 
 | Index | Type     | Purpose |
 |-------|----------|---------|
@@ -34,6 +34,7 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 | 14    | code     | View logs |
 | 15    | code     | Check status |
 | 16    | code     | Stop gateway |
+| 17    | code     | Reset WhatsApp (clear stored auth) |
 
 ## Key technical details
 
@@ -46,5 +47,7 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 - **ngrok is mandatory**: Step 4 sets up ngrok as the primary user interface — the Control UI at `/ui/` has everything users need
 - **ANSI stripping**: Log parser uses `re.sub(r'\x1b\[[0-9;]*m', '', ...)` to strip terminal color codes
 - **`OPENCLAW_NO_RESPAWN=1`**: Required on Colab (no systemd) — enables in-process restart instead of process exit
+- **No channel/gmail skip flags**: `OPENCLAW_SKIP_CHANNELS` and `OPENCLAW_SKIP_GMAIL_WATCHER` are NOT set — all channels (WhatsApp, Telegram, Discord, Slack) and Gmail watcher load normally
+- **Gateway shutdown**: Uses `pkill` + poll loop (up to 10s) to ensure the process fully exits before restarting. The `openclaw gateway restart` CLI does NOT work on Colab (no systemd/dbus)
 - **Tool restrictions**: Config includes `tools.deny: ['exec', 'bash', 'process']` — blocks the agent from running shell commands, preventing prompt-injection attacks that trick it into leaking API keys via `printenv`, `cat /proc/self/environ`, etc.
 - **API keys in memory only**: Keys are set in `os.environ` during cell 3 and inherited by the gateway process — no `.env` file is written to disk
