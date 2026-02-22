@@ -49,5 +49,6 @@ OpenClaw itself is installed at runtime via `npm install -g openclaw@latest` —
 - **`OPENCLAW_NO_RESPAWN=1`**: Required on Colab (no systemd) — enables in-process restart instead of process exit
 - **No channel/gmail skip flags**: `OPENCLAW_SKIP_CHANNELS` and `OPENCLAW_SKIP_GMAIL_WATCHER` are NOT set — all channels (WhatsApp, Telegram, Discord, Slack) and Gmail watcher load normally
 - **Gateway shutdown**: Uses `pkill` + poll loop (up to 10s) to ensure the process fully exits before restarting. The `openclaw gateway restart` CLI does NOT work on Colab (no systemd/dbus)
-- **Tool restrictions**: Config includes `tools.deny: ['exec', 'bash', 'process']` — blocks the agent from running shell commands, preventing prompt-injection attacks that trick it into leaking API keys via `printenv`, `cat /proc/self/environ`, etc.
+- **Lock file cleanup**: After pkill+poll, stale lock files at `/tmp/openclaw-*/gateway.*.lock` are glob-deleted. Without this, the new gateway sees the orphaned lock, waits 5s, and times out on first run
+- **Tool restrictions**: Config includes `tools.deny: ['process']` — blocks the agent from killing/signaling processes. Shell execution is controlled by an **exec allowlist** (`exec-approvals.json`) that permits only `openclaw`, `node`, and `npm` binaries. All other commands (e.g. `printenv`, `cat`, `env`, `bash`) are blocked. Unlisted commands trigger an approval prompt (`ask: 'on-miss'`)
 - **API keys in memory only**: Keys are set in `os.environ` during cell 3 and inherited by the gateway process — no `.env` file is written to disk
